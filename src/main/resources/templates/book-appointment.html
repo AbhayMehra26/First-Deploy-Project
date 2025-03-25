@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Select Appointment Date</title>
+</head>
+<body>
+    <h2>Select Appointment Date and Time</h2>
+    <form action="/book-appointment" method="post">
+        <input type="hidden" name="chatId" th:value="${chatId}" />
+        <input type="hidden" name="service" th:value="${service}" />
+        
+        <label for="dateTime">Select Date & Time:</label>
+        <input type="datetime-local" name="dateTime" required />
+
+        <button type="submit">Confirm Appointment</button>
+    </form>
+</body>
+</html>
