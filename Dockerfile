@@ -1,15 +1,18 @@
-# Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk-alpine
+# Use an official Java runtime as a base image
+FROM eclipse-temurin:17-jdk
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the application JAR file
-COPY target/TelegramBot-9-0.0.1-SNAPSHOT.jar app.jar
+# Copy the Maven wrapper and project files into the container
+COPY . /app
 
-# Expose the application port (change if needed)
-EXPOSE 8080
+# Give execution permission to Maven wrapper
+RUN chmod +x mvnw
 
-# Command to run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Build the application, skipping tests for faster builds
+RUN ./mvnw clean package -DskipTests
+
+# Run the built JAR file
+CMD ["java", "-jar", "target/TelegramBot-9-0.0.1-SNAPSHOT.jar"]
 
